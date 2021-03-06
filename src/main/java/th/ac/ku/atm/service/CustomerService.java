@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import th.ac.ku.atm.data.CustomerRepository;
 import th.ac.ku.atm.model.Customer;
 
+import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -45,13 +47,15 @@ public class CustomerService {
         // 1. หา customer ที่มี id ตรงกับพารามิเตอร์
         Customer storedCustomer = findCustomer(inputCustomer.getId());
 
+        // 2. ถ้ามี id ตรง ให้เช็ค pin ว่าตรงกันไหม โดยใช้ฟังก์ชันเกี่ยวกับ hash
         if (storedCustomer != null) {
-            String storedPin = storedCustomer.getPin();
-            if (BCrypt.checkpw(inputCustomer.getPin(), storedPin))
+            String hashPin = storedCustomer.getPin();
+
+            if (BCrypt.checkpw(inputCustomer.getPin(), hashPin))
                 return storedCustomer;
         }
+        // 3. ถ้าไม่ตรง ต้องคืนค่า null
         return null;
-
     }
 
 }
