@@ -26,8 +26,14 @@ public class BankAccountController {
     @GetMapping
     public String getBankAccountPage(Model model) {
         model.addAttribute("bankAccountList", bankAccountService.getBankAccounts());
-
         return "bankaccount";
+    }
+
+    @PostMapping
+    public String openAccount(@ModelAttribute BankAccount bankAccount, Model model) {
+        bankAccountService.openAccount(bankAccount);
+        model.addAttribute("bankaccounts",bankAccountService.getBankAccounts());
+        return "redirect:bankaccount";
     }
 
 }
