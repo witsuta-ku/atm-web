@@ -1,18 +1,20 @@
 package th.ac.ku.atm.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class BankAccount {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     private int customerId;
     private String type;
     private double balance;
-
-    public BankAccount(int id, int customerId, String type, double balance) {
-        this.id = id;
-        this.customerId = customerId;
-        this.type = type;
-        this.balance = balance;
-    }
-
 
     public int getId() {
         return id;

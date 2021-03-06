@@ -12,7 +12,7 @@
 
 <div class="container" layout:fragment="content">
     <h1>Open Bank Account</h1>
-    <form action="#" th:action="@{/bankaccount}" method="POST">
+    <form th:action="@{/bankaccount}" method="POST">
         <div class="form-group">
             <label for="inputCustomerId">Customer Id</label>
             <input type="input" class="form-control" name="customerId" id="inputCustomerId">
@@ -36,10 +36,13 @@
 
     <hr>
 
+
     <div class="alert" th:if="${alertText != null}">
         <span class="closebtn"  onclick="this.parentElement.style.display='none';">&times;</span>
         <strong><span th:text="${alertText}"></span></strong>
     </div>
+
+    <h1>All Bank Accounts</h1>
 
     <table class="table table-bordered">
         <thead class="thead-light">
@@ -48,14 +51,21 @@
             <th>CustomerId</th>
             <th>Type</th>
             <th>Balance</th>
+            <th>Actions</th>
+
         </tr>
         </thead>
         <tbody>
-        <tr th:each="bankAccount : ${bankAccountList}">
+        <tr th:each="bankAccount : ${bankaccounts}">
             <td th:text="${bankAccount.id}"></td>
             <td th:text="${bankAccount.customerId}"></td>
             <td th:text="${bankAccount.type}"></td>
             <td th:text="${bankAccount.balance}"></td>
+            <td>
+                <a class="btn btn-primary"
+                     th:href="@{/bankaccount/edit/{id}(id=${bankAccount.id})}">Edit</a>
+            </td>
+
         </tr>
         </tbody>
     </table>
